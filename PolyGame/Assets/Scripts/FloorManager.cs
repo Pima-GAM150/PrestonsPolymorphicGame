@@ -16,7 +16,10 @@ public class FloorManager : MonoBehaviour {
     public int rows = 50;
     public IntRange numRooms = new IntRange(0, 0);
     public IntRange roomWidth = new IntRange(0, 0);
-
+    public GameObject[] floorTiles;
+    public GameObject[] wallTiles;
+    public GameObject[] outerWallTiles;
+    public GameObject player;
      
 
 	// Use this for initialization
