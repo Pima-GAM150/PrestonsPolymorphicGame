@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloorManager : MonoBehaviour {
 
-    private FloorManager manager;
+    public static FloorManager floorManager;
     
     //The type of tile that will be held in a position.
     public enum TileType
@@ -25,14 +25,14 @@ public class FloorManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Ensures that only one manager can be loaded.
-		if(manager == null)
+		if(floorManager == null)
         {
-            manager = this;
-            DontDestroyOnLoad(manager);
+            floorManager = this;
+            DontDestroyOnLoad(floorManager.gameObject);
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 	}
 	
