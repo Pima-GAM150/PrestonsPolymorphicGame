@@ -6,7 +6,7 @@ public class Player : Unit {
 
     public int level;
     public int exp;
-    public new Transform transform;
+    public float rangedAttack;
     private float xInput;
     private float yInput;
 
@@ -19,10 +19,10 @@ public class Player : Unit {
     {
         xInput = Input.GetAxis("Horizontal");
         yInput = Input.GetAxis("Vertical");
-        PlayerMove();
+        PlayerControl();
     }
 
-    public void PlayerMove()
+    public void PlayerControl()
     {
         if(xInput != 0)
         {
@@ -34,4 +34,9 @@ public class Player : Unit {
         }
     }
 
+    public void RangedAttack()
+    {
+
+    }
+    
 }

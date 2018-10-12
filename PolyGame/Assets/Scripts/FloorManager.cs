@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorManager : MonoBehaviour {
+public class FloorManager : MonoBehaviour
+{
 
     public static FloorManager floorManager;
-    
+
     //The type of tile that will be held in a position.
     public enum TileType
     {
@@ -25,10 +26,11 @@ public class FloorManager : MonoBehaviour {
     private Room[] rooms;
     private Corridor[] corridors;
 
-	// Use this for initialization
-	private void Start () {
+    // Use this for initialization
+    private void Start()
+    {
         //Ensures that only one manager can be loaded.
-		if(floorManager == null)
+        if (floorManager == null)
         {
             floorManager = this;
             DontDestroyOnLoad(floorManager.gameObject);
@@ -48,14 +50,14 @@ public class FloorManager : MonoBehaviour {
         InstantiateTiles();
         InstantiateOuterWalls();
 
-	}
-	
+    }
 
-	void SetupTilesArray()
+
+    void SetupTilesArray()
     {
         tiles = new TileType[columns][];
-        for(int i = 0; i < tiles.Length; i++)
-        { tiles[i] = new TileType[rows];  }
+        for (int i = 0; i < tiles.Length; i++)
+        { tiles[i] = new TileType[rows]; }
     }
 
     void CreateRoomsAndCorridors()
@@ -103,7 +105,7 @@ public class FloorManager : MonoBehaviour {
             {
                 int xCoord = currentRoom.xPos + j;
                 for (int k = 0; k < currentRoom.roomHeight; k++)
-                 //loops through each room's height as well.
+                //loops through each room's height as well.
                 {
                     int yCoord = currentRoom.yPos + k;
 
@@ -170,3 +172,67 @@ public class FloorManager : MonoBehaviour {
             }
         }
     }
+
+    void InstantiateOuterWalls()
+    {
+        // The outer walls are one unit left, right, up and down from the board.
+        float leftEdgeX = -1f;
+        float rightEdgeX = columns + 0f;
+        float bottomEdgeY = -1f;
+        float topEdgeY = rows + 0f;
+
+        // Instantiate both vertical walls (one on each side).
+        InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeY, topEdgeY);
+        InstantiateVerticalOuterWall(rightEdgeX, bottomEdgeY, topEdgeY);
+
+        // Instantiate both horizontal walls, these are one in left and right from the outer walls.
+        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, bottomEdgeY);
+        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, topEdgeY);
+    }
+
+    void InstantiateVerticalOuterWall(float xCoord, float startingY, float endingY)
+    {
+        // Start the loop at the starting value for Y.
+        float currentY = startingY;
+
+        // While the value for Y is less than the end value...
+        while (currentY <= endingY)
+        {
+            // ... instantiate an outer wall tile at the x coordinate and the current y coordinate.
+            InstantiateFromArray(outerWallTiles, xCoord, currentY);
+
+            currentY++;
+        }
+    }
+    void InstantiateHorizontalOuterWall(float startingX, float endingX, float yCoord)
+    {
+        // Start the loop at the starting value for X.
+        float currentX = startingX;
+
+        // While the value for X is less than the end value...
+        while (currentX <= endingX)
+        {
+            // ... instantiate an outer wall tile at the y coordinate and the current x coordinate.
+            InstantiateFromArray(outerWallTiles, currentX, yCoord);
+
+            currentX++;
+        }
+    }
+
+
+    void InstantiateFromArray(GameObject[] prefabs, float xCoord, float yCoord)
+    {
+        // Create a random index for the array.
+        int randomIndex = Random.Range(0, prefabs.Length);
+
+        // The position to be instantiated at is based on the coordinates.
+        Vector3 position = new Vector3(xCoord, yCoord, 0f);
+
+        // Create an instance of the prefab from the random index of the array.
+        GameObject tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+
+        // Set the tile's parent to the board holder.
+        tileInstance.transform.parent = floorManager.transform;
+    }
+
+}

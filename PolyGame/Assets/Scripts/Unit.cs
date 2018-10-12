@@ -11,6 +11,8 @@ public abstract class Unit : MonoBehaviour
     public float attack;
     public float defense;
 
+    public new Transform transform;
+
     void Start()
     {
 
@@ -21,4 +23,36 @@ public abstract class Unit : MonoBehaviour
 
     }
 
+    //spawn a simple melee hitbox and check if it hits anyone
+    public void MeleeAttack(float attack, float range)
+    {
+
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            IDied();
+        }
+    }
+
+    public void RestoreHealth(float healValue)
+    {
+        if(health + healValue >= maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += healValue;
+        }
+    }
+
+    public void IDied()
+    {
+        Destroy(this.gameObject);
+    }
 }
