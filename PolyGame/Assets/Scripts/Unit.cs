@@ -5,10 +5,11 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour
 {
 
-    public int health;
-    public int speed;
-    public int attack;
-    public int defense;
+    public float maxHealth;
+    public float health;
+    public float speed;
+    public float attack;
+    public float defense;
 
     void Start()
     {
