@@ -17,6 +17,8 @@ public class FloorManager : MonoBehaviour
     public int rows = 50;
     public IntRange numRooms = new IntRange(0, 0);
     public IntRange roomWidth = new IntRange(0, 0);
+    public IntRange roomHeight = new IntRange(0, 0);
+    public IntRange corridorLength = new IntRange(0, 0);
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] outerWallTiles;
