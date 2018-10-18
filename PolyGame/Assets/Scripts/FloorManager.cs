@@ -88,7 +88,7 @@ public class FloorManager : MonoBehaviour
             }
 
             //spawns the player midway through creating rooms.
-            if (i == rooms.Length * .5f)
+            if (i == (int) (rooms.Length * .5f))
             {
                 Vector3 playerPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
                 Instantiate(player, playerPos, Quaternion.identity);
